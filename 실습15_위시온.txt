@@ -1,0 +1,91 @@
+package pk0518;
+
+import java.io.*;
+import java.util.*;
+
+class Person implements Serializable {
+	String name;
+	int age;
+	double len;
+
+	public Person(String n, int a, double h) {
+		this.name = n;
+		this.age = a;
+		this.len = h;
+	}
+
+	public String toString() {
+		return "name = " + this.name + " age = " + this.age + " lenght = " + this.len;
+	}
+}
+
+public class PersonTest {
+	public static void main(String[] args) throws IOException {
+		String n;
+		int a;
+		double h;
+		Scanner sc = new Scanner(System.in);
+		ObjectInputStream in = null;
+		ObjectOutputStream out = null;
+		System.out.print("이름 :");
+		n = sc.next();
+		System.out.print("나이 :");
+		a = sc.nextInt();
+		System.out.print("키 :");
+		h = sc.nextDouble();
+		int c;
+		FileWriter fout = null;
+		try {
+			fout = new FileWriter("file1.txt");
+			fout.write(n);
+			fout.write("/");
+			fout.write(Integer.toString(a));
+			fout.write("/");
+			fout.write(Double.toString(h));
+			out = new ObjectOutputStream(new FileOutputStream("file2.dat"));
+			Person p1 = new Person(n, a, h);
+			out.writeObject(p1);
+			out.flush();
+		} catch (IOException e) {
+			System.out.println("입출력  오류");
+		} finally {
+			if (in != null) {
+				in.close();
+			}
+			if (fout != null) {
+				fout.close();
+			}
+		}
+		FileInputStream inS = null;
+		FileReader inR = null; // 문자스트림
+		inS = new FileInputStream("file1.txt"); // 파일로부터 바이트입력 스트림 생성
+		inR = new FileReader("file1.txt"); // 파일로부터 문자 입력 스트림 생성s
+		System.out.print("file1.txt:");
+		while ((c = inR.read()) != -1) { // 한 문자씩 읽는다.
+			System.out.print((char) c);
+		}
+		System.out.println();
+
+		try {
+			out = new ObjectOutputStream(new FileOutputStream("file2.dat"));
+			Person p1 = new Person(n, a, h);
+			out.writeObject(p1);
+
+			out.flush();
+			in = new ObjectInputStream(new FileInputStream("file2.dat"));
+			Person p2 = (Person) in.readObject();
+			System.out.print("file2.dat:");
+			System.out.println(p2);
+		} catch (ClassNotFoundException e) {
+
+		} finally {
+			if (in != null) {
+				in.close();
+			}
+			if (out != null) {
+				out.close();
+			}
+		}
+	}
+
+}

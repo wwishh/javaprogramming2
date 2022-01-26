@@ -1,0 +1,74 @@
+package pk0426;
+
+interface Flying {
+	int MAX = 1000; // (a)
+
+	void fly(); // (b)
+
+	void addTime(int t); // (c)
+}
+
+class Toy {
+	private String name; // (d)
+	private int id; // (e)
+	static int count = 100; // (f)
+
+	public Toy(String name) { // (g)
+		this.name = name;
+		id = count++; // [3-1] count 를 id 에 대입하고 증가
+	}
+
+	public String toString() { // (h)
+		return ("name=" + name + " id=" + id);
+	}
+}
+
+class FlyingToy extends Toy implements Flying // (i)
+{
+	int time; // (j)
+
+	public FlyingToy(String name, int time) { // (k)
+		super(name); // [3-2] 상위생성자 호출
+		this.time = time;
+	}
+
+	public void addTime(int time) { // [3-3] 매개변수를 멤버변수에 합하여 Max를 넘어가면 Max로 처리
+		this.time += time;
+		if (this.time > MAX)
+			this.time = MAX;
+	}
+
+	public void fly() { // [3-4] time이 0보다 크면 1씩 감소, 0이면 시간종료 메시지출력
+		if (time > 0)
+			time--;
+		if (time == 0)
+			System.out.println("시간종료");
+	}
+
+	public String toString() { // [3-5] 상위 toString 호출, time을 결합하여 반환 (출력예시 참조)
+		return (super.toString() + "time =" + time);
+	}
+} // FlyingToy
+
+public class MidTest2018 {
+	public static void main(String args[]) {
+		Toy[] tlist = { new Toy("cat"), new Toy("dog"),
+				new FlyingToy("bird", 50) }; // (l)
+
+		System.out.println(" ** Toy List **");
+		for (Toy t : tlist) { // (m)
+			System.out.println(t); // (n)
+			if (t instanceof Flying) {
+				Flying f = (Flying) t;
+				f.fly();
+				f.fly();
+				System.out.println(f);
+				f.addTime(2000);
+				System.out.println(f);
+			}
+			// [3-6] t가 Flying 객체이면 형변환하고 fly() 두번호출, 객체 출력하고, addTime(2000)호출하고
+			// 객체 출력
+
+		}
+	}
+}

@@ -1,0 +1,153 @@
+1번문제
+package pk0327;
+
+/*(1)상속(Inheritance) 이미 정의된 클래스의 구성요소들을 계승 받아 새로운 클래스로 확장하는 것 (7)
+(2)method overriding 상위클래스에 존재하는 메서드를 하위클래스에서 재정의 (9)(10)
+(3)upcast 상속관계를 가지는 하위 객체가 상위클래스로 형 변환 가능, 상위클래스 멤버만 접근 가능 (15)(18)
+(4)LateBinding 재정의된 메서드는 실행시간에 타입이 결정(12)(13)(14)(16)(17)(20)(21)
+(5)다형성(polymorphism) 하나의 명령으로 다양한 결과를 얻을 수 있는 특징 (12)(13)(14)(16)(17)*/
+
+
+class Point {                   //(1)
+    int mx, my;                //(2)
+    public void add(int x, int y) { //(3)
+ mx += x;      
+ my += y;
+     }
+    public void add() {        //(4)
+ mx++; 
+ my++;
+    }
+    public void display(){     //(5)
+         System.out.println("x = " + mx + " y = " + my);
+    }
+    public String toString() {
+     return ("(" + mx + "," + my + ")");  //(6)  
+    }
+}
+class Point3D extends Point  { //(7)
+    private int mz;                 //(8)
+    public void add(){           //(9)
+      mx++; 
+      my++; 
+      mz++;
+    }
+    public void display(){  //(10)
+ System.out.println("x = " + mx + " y = " + my + " z = " + mz);
+    }
+    public String toString() {
+     return ("(" + mx + "," + my +  "," + mz + ")");  //(23)  
+    }
+}
+class PointTest {
+  public static void main (String args[]) {
+ Point p1 = new Point();    //(11)
+ p1.add(10, 20);              //(12) 
+ p1.add();                      //(13)
+ p1.display();                 //(14) 
+   
+ p1 = new Point3D();       //(15) 
+ p1.add();                    //(16)
+ p1.display();                 //(17) 
+
+ Point plist[] = {new Point(), new Point3D()};    //(18)
+ for(Point p:plist){            //(19)
+  p.add();           //(20)      
+  p.display();       //(21)
+  System.out.println(p);   //(22)
+            }
+     }
+}
+
+
+2번문제
+
+
+class Point {
+	int x;
+	int y;
+
+	public Point(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
+
+	public String toString() {
+		return "(" + x + "," + y + ")";
+	}
+}
+
+class Shape {
+	Point center;
+
+	public Shape() {
+		center = new Point(0, 0);
+	}
+
+	public Shape(Point p) {
+		center = p;
+	}
+
+	public String toString() {
+		return center.toString();
+	}
+}
+
+class Circle extends Shape {
+
+	double radius;
+
+	public Circle(int x, int y, double r) {
+		super(new Point(x, y));
+		this.radius = r;
+	}
+	double area(){
+		
+		return(radius*radius*Math.PI);
+	}
+}
+
+class Rectangle extends Shape {
+
+	int length;
+	int height;
+
+	public Rectangle(int x, int y, int length, int height) {
+		super(new Point(x, y));
+		this.length = length;
+		this.height = height;
+		
+	}
+	public Point LeftTop(){
+		Point LT= new Point(center.x , center.y);
+		LT.x -= length/2;
+		LT.y -= length/2;
+		return LT;
+	}
+	public Point RightBottom(){
+		Point RB = new Point(center.x , center.y);
+		RB.x += length/2;
+		RB.y += length/2;
+		return RB;		
+}
+		public double Rarea(){
+			return length*height;
+		}
+		public String toString(){
+			return center.toString() +"length : "+ length + "height :"+ height + "LeftTop :"+LeftTop() 
+			+ "RightBottom :"+ RightBottom() +"Rarea : "+ Rarea();
+			
+			
+		}
+}
+public class ShapeTest {
+
+	public static void main(String[] args) {
+
+		Shape [] slist={new Shape(),new Circle(4,4,4),new Rectangle(4,4,4,4)};
+		for(int i=0;i<slist.length;i++){
+			System.out.println(slist[i]);
+		}
+	}
+
+}

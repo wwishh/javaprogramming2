@@ -1,0 +1,239 @@
+package pk0607;
+
+import javax.swing.*;
+import java.awt.event.*;
+
+class MyFrame extends JFrame {
+	private JButton button;
+	private JTextField text, result;
+
+	public MyFrame() {
+		setSize(300, 130);
+		setTitle("제곱 계산하기");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		ButtonListener listener = new ButtonListener(); // 리스너 객체 생성
+
+		JPanel panel = new JPanel();
+		panel.add(new JLabel("숫자 입력: ")); // 레이블 생성
+		text = new JTextField(15); // 컬럼수가 15인 텍스트 필드 생성
+		text.addActionListener(listener); // 텍스트 필드에 리스너 연결
+		panel.add(text);
+
+		panel.add(new JLabel("제곱한 값: "));
+		result = new JTextField(15); // 결과를 나타낼 텍스트 필드
+		result.setEditable(false); // 편집 불가 설정
+		panel.add(result);
+		button = new JButton("OK");
+		button.addActionListener(listener);
+		panel.add(button);
+		add(panel);
+		setVisible(true);
+	}
+
+	// 텍스트 필드와 버튼의 액션 이벤트 처리
+	private class ButtonListener implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == button || e.getSource() == text) {
+				String name = text.getText();
+				int value = Integer.parseInt(name);
+				result.setText(" " + value * value);
+				text.requestFocus();
+			}
+		}
+	}
+}
+
+public class TextFieldTest extends JFrame {
+	public static void main(String[] args) {
+		new MyFrame();
+	}
+}
+
+
+
+
+
+package pk0607;
+
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+class MyFrame2 extends JFrame implements ActionListener {
+	protected JTextField textField;
+	protected JTextArea textArea;
+
+	public MyFrame2() {
+		setTitle("Text Area Test");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		textField = new JTextField(30);
+		textField.addActionListener(this);
+
+		textArea = new JTextArea(10, 30);
+		textArea.setEditable(false);
+
+		add(textField, BorderLayout.NORTH);
+		add(textArea, BorderLayout.CENTER);
+
+		pack();
+		setVisible(true);
+	}
+
+	public void actionPerformed(ActionEvent evt) {
+		String text = textField.getText();
+		textArea.append(text + "\n");
+		textField.selectAll();
+		textArea.setCaretPosition(textArea.getDocument().getLength());
+	}
+}
+
+public class TextAreaTest extends JFrame {
+	public static void main(String[] args) {
+		new MyFrame2();
+	}
+}
+
+
+
+
+
+package pk0607;
+
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.applet.Applet;
+
+import javax.swing.*;
+
+class MyFrame3 extends JFrame implements ActionListener {
+
+	private JButton buttonOK;
+	private JCheckBox onion, cheese, tomato;
+
+	public MyFrame3() {
+		setTitle("체크박스 테스트");
+		setSize(300, 130);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		JLabel label = new JLabel("햄버거에 무엇을 추가하시겠습니까?");
+		JPanel topPanel = new JPanel();
+		topPanel.add(label);
+		add(topPanel, BorderLayout.NORTH);
+		// 체크 박스 생성 및 추가
+		JPanel panel = new JPanel();
+		onion = new JCheckBox("양파");
+		panel.add(onion);
+		cheese = new JCheckBox("치즈");
+		panel.add(cheese);
+		tomato = new JCheckBox("토마토");
+		panel.add(tomato);
+		add(panel, BorderLayout.CENTER);
+
+		// 버튼 생성 및 추가
+		buttonOK = new JButton("OK");
+		JPanel bottomPanel = new JPanel();
+		bottomPanel.add(buttonOK);
+		add(bottomPanel, BorderLayout.SOUTH);
+		buttonOK.addActionListener(this);
+
+		setVisible(true);
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == buttonOK) {
+			String msg = "";
+			if (onion.isSelected())
+				msg += "양파\n";
+			if (cheese.isSelected())
+				msg += " 치즈";
+			if (tomato.isSelected())
+				msg += " 토마토";
+			msg = "선택한 옵션은 다음과 같습니다.\n " + msg;
+			System.out.println(msg);
+			onion.setSelected(false);
+			cheese.setSelected(false);
+			tomato.setSelected(false);
+		}
+	}
+}
+
+public class MyFrameTest extends JFrame {
+	public static void main(String[] args) {
+		new MyFrame3();
+	}
+}
+
+
+
+
+
+package pk0607;
+
+import javax.swing.*;
+import javax.swing.border.Border;
+
+import java.awt.event.*;
+import java.awt.*;
+
+class MyFrame4 extends JFrame implements ActionListener {
+
+	private JRadioButton small, medium, large;
+	private JLabel text;
+	private JPanel topPanel, sizePanel, resultPanel;
+
+	public MyFrame4() {
+		setTitle("라디오 버튼 테스트");
+		setSize(300, 150);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		topPanel = new JPanel();
+		JLabel label = new JLabel("어떤 크기의 커피를 주문하시겠습니까?");
+		topPanel.add(label);
+		add(topPanel, BorderLayout.NORTH);
+
+		sizePanel = new JPanel();
+		small = new JRadioButton("Small Size");
+		medium = new JRadioButton("Medium Size");
+		large = new JRadioButton("Large Size");
+
+		ButtonGroup size = new ButtonGroup();
+		size.add(small);
+		size.add(medium);
+		size.add(large);
+		small.addActionListener(this);
+		medium.addActionListener(this);
+		large.addActionListener(this);
+		sizePanel.add(small);
+		sizePanel.add(medium);
+		sizePanel.add(large);
+		add(sizePanel, BorderLayout.CENTER);
+
+		resultPanel = new JPanel();
+		text = new JLabel("크기가 선택되지 않았습니다.");
+		text.setForeground(Color.red);
+		resultPanel.add(text);
+		add(resultPanel, BorderLayout.SOUTH);
+		setVisible(true);
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == small) {
+			text.setText("Small 크기가 선택되었습니다.");
+		}
+		if (e.getSource() == medium) {
+			text.setText("Medium 크기가 선택되었습니다.");
+		}
+		if (e.getSource() == large) {
+			text.setText("Large 크기가 선택되었습니다.");
+		}
+	}
+}
+
+public class RadioButtonTest extends JFrame {
+	public static void main(String[] args) {
+		new MyFrame4();
+	}
+}

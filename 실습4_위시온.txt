@@ -1,0 +1,113 @@
+package pk0320;
+
+class Super {
+	int x1 = 100;
+	int x2 = 200;
+	private int y = 300;
+	static int z = 400;
+
+	void print() {
+		System.out.println("x1 = " + x1 + " x2 = " + x2 + " y = " + y + " z = "
+				+ z);
+	}
+}
+
+class Sub extends Super// Super를 상속받음
+{
+	int x2 = 1000;
+}
+
+public class InheritanceTest1 {
+	public static void main(String[] args) {
+		Super s1 = new Super();
+		System.out.println("s1.x1 = " + s1.x1);
+		System.out.println("s1.x2 = " + s1.x2);
+		// System.out.println("s1.y = " + s1.y); //프라이빗 처리되어 있는 y를 사용하려고 했기 때문에 오류가 발생했다
+		System.out.println("s1.z = " + s1.z);
+		s1.print();
+		Sub s2 = new Sub();
+		System.out.println("s2.x1 = " + s2.x1);// Super에서 상속받음
+		System.out.println("s2.x2 = " + s2.x2);// Super에서 상속받은 x2를 사용하지못함(상위멤버숨김)
+		// System.out.println("s2.y = " + s2.y);//상속을 받을수 없음
+		System.out.println("s2.z = " + s2.z);// 접근가능
+		s2.print();
+	}
+}
+
+
+
+package pk0320;
+
+import java.text.*;
+
+class Shape {
+	protected double x;
+	protected double y;
+	protected String type;
+
+	public Shape() {
+		this("Shape", 1, 1);
+	}
+
+	public Shape(String type, double x, double y) {
+		this.type = type;
+		this.x = x;
+		this.y = y;
+	}
+
+	public String toString() {
+		return "type : " + type + " (" + x + "," + y + ")";
+	}
+}
+
+class Circle extends Shape// Shape를 상속받음
+{
+	private double radius;
+
+	public Circle(double x, double y, double radius) {
+		super("Circle", x, y); // Call the base constructor
+		this.radius = radius;
+	}
+
+	public String toString() {
+		DecimalFormat df = new DecimalFormat("###.##");
+		return super.toString() + " Radius : " + df.format(radius) + " Area : "
+				+ df.format(getArea());
+	}
+
+	public double getArea() {
+		return radius * radius * Math.PI;
+	}
+}
+
+class Rectangle extends Shape// Shape를 상속받음
+{
+	private double width;
+	private double height;
+
+	public Rectangle(double x, double y, double w, double h) {
+		super("Rectangle", x, y); // Call the base constructor
+		this.width = w;
+		this.height = h;
+	}
+
+	public double getArea() {
+		return width * height;
+	}
+
+	public String toString() {
+		return super.toString() + " Width : " + width + " Height : " + height
+				+ " Area : " + getArea();
+	}
+}
+
+public class InheritanceTest2 {
+	public static void main(String[] args) {
+		Shape s = new Shape();
+		Circle c = new Circle(30, 40, 50);
+		Rectangle r = new Rectangle(60, 70, 100, 200);
+		System.out.println(s);
+		System.out.println(c);
+		System.out.println(r);
+	}
+}

@@ -1,0 +1,37 @@
+package pk0409;
+
+import java.io.*;
+
+class ExceptionTest1_try {
+	public static void main(String args[]) {
+		try {// 실행구문
+				// int a[]=null;//null값의 배열 초기화
+			String str = "TEST";// 문자열 초기화
+			// int a1 = a[0];//a의 0자리값을 a1으로 초기화, 그러나 a는 null이기 때문에 NullPointerException오류발생
+			// Object o = str;//최상위 타입의 o를 str값으로 초기화
+			// Integer i = (Integer) o;//o를 Integer로 형변환 후 i 초기화 ,o는 문자열이기때문에
+			// ClassCastException오류발생
+			// int istr = Integer.parseInt(str);//str을 int형으로 변환,숫자가 아닌 문자열이 들어가있기
+			// 때문에NumberFormatException오류발생
+			// int x = 100/ 0;//x를 100/0으로 초기화 ,0으로 나눌수 없기때문에 ArithmeticException오류발생
+			char c = (char) System.in.read(); // c 입력받고 초기화
+		} catch (NullPointerException e) {// null과 관련된 오류
+			System.out.println("NullPointerException 처리 루틴 : ");
+			System.out.println(e + " 예외 발생");// 오류 발생부분 출력 (이하 모두 같음)
+		} catch (ClassCastException e) {// 클래스 타입에 관련된 오류
+			System.out.println("ClassCastException 처리 루틴 : ");
+			System.out.println(e + " 예외 발생");
+		} catch (NumberFormatException e) {// 숫자형으로 포맷팅시 관련된 오류
+			System.out.println("NumberFormatException 처리 루틴");
+			System.out.println(e + " 예외 발생");
+		} catch (ArithmeticException e) {// 정수 나누기에 관련된 오류
+			System.out.println("ArithmeticException 처리 루틴 : ");
+			System.out.println(e + " 예외 발생");
+		} catch (IOException e) {// 컴파일 관련된 오류,입력,파일로드 관련
+			System.out.println("IOException 처리 루틴 : ");
+			System.out.println(e + " 예외 발생");
+		} finally {// 오류 출력 마치고 실행
+			System.out.println("예외 처리를 끝내고 finally 블럭을 수행합니다");
+		}
+	}
+}

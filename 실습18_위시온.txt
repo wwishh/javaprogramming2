@@ -1,0 +1,62 @@
+package pk0530;
+
+import java.awt.Font;
+import java.awt.GridLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class gugudan extends JFrame {
+
+	public gugudan() {
+		setTitle("GUI 구구단 프로그램");
+		setSize(300, 200);
+
+		setLayout(new GridLayout(2, 1));
+
+		setFont(new Font("Monospaced", Font.BOLD, 32));
+
+		JLabel n1 = new JLabel("n1");
+		n1.setFont(new Font("Monospaced", Font.BOLD, 32));
+		JLabel n2 = new JLabel("n2");
+		n2.setFont(new Font("Monospaced", Font.BOLD, 32));
+		JLabel lx = new JLabel("x");
+		lx.setFont(new Font("Monospaced", Font.BOLD, 32));
+		JLabel le = new JLabel("=");
+		le.setFont(new Font("Monospaced", Font.BOLD, 32));
+		JLabel n3 = new JLabel("n3");
+		n3.setFont(new Font("Monospaced", Font.BOLD, 32));
+
+		JPanel p1 = new JPanel();
+		p1.add(n1);
+		p1.add(lx);
+		p1.add(n2);
+		p1.add(le);
+		p1.add(n3);
+
+		JPanel p2 = new JPanel();
+
+		p2.setLayout(new GridLayout(2, 5));
+		for (int i = 1; i <= 9; i++) {
+			JButton btn = new JButton("" + i);
+			btn.setFont(new Font("Monospaced", Font.BOLD, 32));
+			p2.add(btn);
+		}
+		p2.add(new JButton("다시"));
+		add(p1);
+		add(p2);
+
+		setResizable(false);
+		setLocationRelativeTo(null);
+
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
+	}
+
+	public static void main(String[] args) {
+
+		new gugudan();
+	}
+}

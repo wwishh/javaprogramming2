@@ -1,0 +1,92 @@
+클래스 멤버필드: 메소드 내에 정의되는 지역변수와 클래스에 정의되는 객체변수로 나눌 수 있다.
+생성자: 객체가 생성 될 때 객체를 초기화하고 객체를 저장하는 메소드이다.
+this: 현재 클래스의 인스턴스의 특정 필드를 지정할 때 사용한다.
+접근제어: 변수나 메소드를 선언할 때 접근을 제어한다.
+객체생성: new 연산자로 선언하고 생성한다.
+메소드 호출:다른 메소드에 실행 내용을 작성해놓고 메인에서 호출해서 사용한다.
+변수 확인:변수가 어떻게 사용되었는지 확인한다.
+
+(1)
+(a)private int x, y; 
+  final int MAX= 100;
+
+(b) public MyClass(int x, int y) { 
+        count++;
+ setXY(x,y);
+  }
+
+(c) public void setXY(int x, int y)
+ public int getX() {    return (this.x);  }
+  public int getY() {    return (this.y);  }
+  public void print()
+
+(2)   if (x <= MAX)  this.x = x;
+     else           this.x = MAX;
+     if (y <= MAX)  this.y = y;
+     else           this.y = MAX;
+  }
+  public int getX() {    return (this.x);  }
+  public int getY() {    return (this.y);  }
+
+(3)private int x, y;
+
+(4)c1.print(); 
+     c1.setXY(10,50);
+     c1.print(); 
+     c2.print(); 
+
+(5)    MyClass c1 = new MyClass();     
+     MyClass c2 = new MyClass(50,250);
+
+(6) System.out.println("c1="+ c1.getX() + "," + c1.getY());   
+     c1.print(); 
+     c1.setXY(10,50);
+     c1.print(); 
+     c2.print(); 
+     System.out.println("count = "+ MyClass.count);
+
+(7)public MyClass(int x, int y)
+public void setXY(int x, int y)
+
+(8)static int count=0;
+
+class MyClass{
+  private int x, y; //
+  final int MAX= 100;
+  static int count=0;
+//변수를 정수형으로 선언
+  public MyClass() { 
+     this(10,10);
+  }  //생성자로 초기화
+  public MyClass(int x, int y) { 
+        count++;
+ setXY(x,y);
+  }
+  public void setXY(int x, int y) { 
+     if (x <= MAX)  this.x = x;
+     else           this.x = MAX;
+     if (y <= MAX)  this.y = y;
+     else           this.y = MAX;
+  }
+//x,y 값 설정
+  public int getX() {    return (this.x);  }
+  public int getY() {    return (this.y);  }
+  public void print()  {
+    System.out.println("x="+x + ", y="+y);  
+  }
+//x,y의 값 얻기
+} 
+class ClassTest{
+ public static void main(String[] args)
+  {
+     MyClass c1 = new MyClass();     
+     MyClass c2 = new MyClass(50,250);
+     System.out.println("c1="+ c1.getX() + "," + c1.getY());   
+     c1.print(); 
+     c1.setXY(10,50);
+     c1.print(); 
+     c2.print(); 
+     System.out.println("count = "+ MyClass.count);
+  }
+//객체 생성하고 상태 출력하고 카운트 출력
+}

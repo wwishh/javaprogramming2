@@ -1,0 +1,142 @@
+package pk0510;
+
+import java.util.*;
+import java.io.*;
+
+class Dictionary {
+ private TreeMap<String, String> words;
+
+ public Dictionary() {
+  words = new TreeMap<String, String>(); // TreeMap »ı¼º
+ }
+
+ public void add(String e, String k) { // ´Ü¾î Ãß°¡
+  words.put(e.toLowerCase(), k); // ¿µ¾î ¼Ò¹®ÀÚ·Î º¯È¯, Map¿¡ Ãß°¡
+ }
+
+ public void search(String s) { // ´Ü¾î Ã£±â ¸Ş¼­µå (¿µÇÑ, ÇÑ¿µ)
+  Object sword = null;
+  char c = s.charAt(0); // ÀÔ·ÂµÈ ´Ü¾îÀÇ Ã¹±ÛÀÚ ²¨³»±â
+  if (Character.isLowerCase(c)) { // ÀÔ·ÂµÈ ´Ü¾îÀÇ Ã¹±ÛÀÚ°¡ ¿µ¹®ÀÚ ¼Ò¹®ÀÚÀÌ¸é ¿µÇÑ»çÀüÃ³¸®
+   sword = words.get(s);
+   System.out.println(sword);
+
+  } else if (words.containsValue(s)) { // ÀÔ·ÂµÈ ´Ü¾îÀÇ Ã¹¹®ÀÚ°¡ ¿µ¹®ÀÚ°¡ ¾Æ´Ï¸é ÇÑ¿µ»çÀüÃ³¸®
+   Set e = words.keySet(); // TreeMapÀÇ key ¿ä¼ÒµéÀ» Set °´Ã¼·Î ¹İÈ¯
+   Iterator it = e.iterator(); // key ÁıÇÕµéÀ» ¼øÂ÷ Á¢±ÙÇÏ±â À§ÇÑ iterator °´Ã¼ ¹İÈ¯
+   while (it.hasNext()) {
+    Object k = it.next(); // key set¿¡¼­ ÇÏ³ªÀÇ key¸¦ ²¨³»±â
+    String v = (String) words.get(k); // keyÀÇ value ÃßÃâ
+    if (s.equals(v)) { // ÀÔ·ÂµÈ ´Ü¾î¿Í value°¡ ÀÏÄ¡ÇÏ´Â°¡ Ã¼Å©
+     sword = k;
+     System.out.println(sword);
+    } // if
+   } // while
+  } // else
+  if (sword == null) // Ã£´Â ´Ü¾î°¡ ¾ø´Â °æ¿ì
+   System.out.println(s + "´Â(Àº) ´Ü¾îÀå¿¡ µî·ÏµÇ¾î ÀÖÁö ¾Ê½À´Ï´Ù.");
+ } // search
+
+ public void print() { // ´Ü¾îÀå Ãâ·Â ¸Ş¼­µå
+  System.out.println("***´Ü¾îÀå***");
+  System.out.println("¿µ¾î ÇÑ±Û ");
+  System.out.println("------------");
+  Set e = words.keySet(); // TreeMapÀÇ key ¿ä¼ÒµéÀ» Set °´Ã¼·Î ¹İÈ¯
+  Iterator it = e.iterator(); // key ÁıÇÕµéÀ» ¼øÂ÷ Á¢±ÙÇÏ±â À§ÇÑ iterator °´Ã¼ ¹İÈ¯
+  while (it.hasNext()) {
+   Object k = it.next(); // key set¿¡¼­ ÇÏ³ªÀÇ key¸¦ ²¨³»±â
+   String v = (String) words.get(k); // keyÀÇ value ÃßÃâ
+   System.out.println(k + " " + v);
+  } // while
+ } // print()
+} // class Dictionary
+
+// »ç¿ëÀÚ ¿¹¿Ü Å¬·¡½º
+
+class UserRangeException extends Exception {
+ public UserRangeException(String s) {
+  super(s); // Call the base constructor
+ }
+}
+
+class WordsExTreeMap {
+ public static void main(String args[]) throws IOException {
+  BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+
+  Dictionary d = new Dictionary();
+
+  String sel = new String();
+
+  String ew = new String();
+  String kw = new String();
+
+  while (true) {
+   System.out.println("===================");
+   System.out.println("1. ´Ü¾îµî·Ï ");
+   System.out.println("2. ´Ü¾î°Ë»ö");
+   System.out.println("3. ´Ü¾îÀå Ãâ·Â");
+   System.out.println("4. Á¾·á");
+   System.out.print("¸Ş´º¸¦ ¼±ÅÃÇÏ¼¼¿ä : ");
+   sel = in.readLine();
+   System.out.println("===================");
+   try {
+    switch (Integer.parseInt(sel)) {
+    case 4: // Á¾·á
+     System.exit(0);
+    case 1: // ÀÔ·Â ¹× Ãß°¡
+     while (true) {
+      System.out.print("¿µ¾î´Ü¾îÀÔ·Â (Á¾·á q): ");
+      ew = in.readLine();
+      if (ew.equals("q") || ew.equals("¤²"))
+       break;
+      chkEng(ew); // ¿µ¾îÀÎÁö Ã¼Å©
+      System.out.print("´Ü¾î ¶æ(ÇÑ±Û´Ü¾î)ÀÔ·Â: ");
+      kw = in.readLine();
+      chkKor(kw); // ÇÑ±ÛÀÎÁö Ã¼Å©
+      System.out.println(ew);
+      System.out.println(kw);
+      d.add(ew, kw);
+     } // while
+     System.out.println("ÀÔ·ÂÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.");
+     break;
+    case 2: // °Ë»ö
+     System.out.print("Ã£´Â ´Ü¾î ÀÔ·Â: ");
+     ew = in.readLine();
+     d.search(ew);
+     break;
+    case 3: // Ãâ·Â
+     d.print();
+     break;
+    default:
+     System.out.println("¿øÇÏ´Â ÀÛ¾÷ ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä. ");
+    } // switch
+   }// try
+   catch (NumberFormatException e) {
+    System.out.println(e + " ¿¹¿Ü ¹ß»ı");
+    System.out.println("¸Ş´º ¼±ÅÃÀº ¼ıÀÚ¸¸ ÀÔ·Â °¡´ÉÇÕ´Ï´Ù.");
+   } catch (UserRangeException e) {
+    System.out.println(e + " ¿¹¿Ü ¹ß»ı");
+    System.out.println("´Ù½Ã ÀÔ·Â ÇÏ¼¼¿ä.");
+   }
+  } // while
+ } // main
+
+ // ¿¹¿ÜÃ³¸® ¸Ş¼Òµå
+ public static void chkEng(String s) throws UserRangeException {
+  for (int i = 0; i < s.length(); i++) {
+   char c = s.charAt(i); // ÀÔ·ÂµÈ ´Ü¾î¿¡¼­ ÇÑ¹®ÀÚ¾¿ ²¨³»±â
+   if (!Character.isLowerCase(c) && !Character.isUpperCase(c)) // ¿µ¹®ÀÚ°¡
+                  // ¾Æ´Ï¸é
+                  // ¿¹¿Ü¹ß»ı
+    throw new UserRangeException("¿µ¾î´Ü¾î ¿À·ù");
+  }// for
+ }
+
+ public static void chkKor(String s) throws UserRangeException {
+  for (int i = 0; i < s.length(); i++) {
+   char c  = s.charAt(i); // ÀÔ·ÂµÈ ´Ü¾î¿¡¼­ ÇÑ¹®ÀÚ ²¨³»±â
+   if (c < "°¡" || c > "ÆR") 
+    throw new UserRangeException("ÇÑ±Û´Ü¾î ¿À·ù."); 
+    }// for
+ }
+} // wordsEx

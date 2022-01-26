@@ -1,0 +1,76 @@
+package pk0409;
+
+abstract class Employee { // 추상 클래스
+	protected String name; // 사원 공통 속성
+	protected long pay;
+
+	abstract void print(); // 사원 공통 메서드 (추상메서드)
+}
+
+interface BasePay { // 기본급 처리
+	public void calcpay();
+}
+
+interface TimePay { // 시간급 처리
+	int MAX = 24;
+	int PAY = 30000;
+
+	public void calcTimepay();
+}
+
+class Member extends Employee implements BasePay { // 일반사원 클래스 정의
+	int family;
+	long base;
+
+	public Member(String inname, int infam, long inbase) { // 생성자
+		name = inname;
+		family = infam;
+		base = inbase;
+		this.calcpay();
+	}
+
+	public void calcpay() { // 기본급, 가족수당으로 급여처리
+		pay = base + family * 30000;
+	}
+
+	public void print() {
+		System.out.println("사원명 가족수     기본급          급 여");
+		System.out.println("----------------------------------");
+		System.out.println(name + "   " + family + "   " + base + "   " + pay);
+	}
+}
+
+class PartTimer extends Employee implements TimePay { // 시간제 사원 클래스 정의
+	int time;
+
+	public PartTimer(String inname, int t) {
+		name = inname;
+		time = t;
+		this.calcTimepay();
+	}
+
+	public void calcTimepay() { // 시간 * 시간당급여로 급여처리
+		if (time > MAX) {
+			time = MAX;
+		}
+		pay = time * PAY;
+	}
+
+	public void print() {
+		System.out.println("성 명      근무시간      급 여");
+		System.out.println("----------------------------------");
+		System.out.println(name + "     " + time + "   " + pay);
+	}
+}
+
+public class Pay {
+	public static void main(String[] args) {
+		Employee p[] = { new Member("홍길동", 3, 1000000), new Member("성춘향", 5, 1500000), new PartTimer("김유신", 10),
+				new PartTimer("이몽룡", 30) };
+		for (int i = 0; i < p.length; i++) {
+			p[i].print();
+			System.out.println();
+			;
+		}
+	}
+}

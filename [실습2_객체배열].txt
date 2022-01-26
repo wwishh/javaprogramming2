@@ -1,0 +1,56 @@
+[½Ç½À #2] °´Ã¼¹è¿­
+
+I.Person °´Ã¼ ¹è¿­ ¿¬½À
+
+class Person{
+   String name;
+   int age;
+
+   public Person(){
+	this("", 0);
+   }
+
+   public Person(String n, int a){
+	name = n;
+	if (age >=0 && age <=200)
+		age = a;
+	else
+	{
+		System.out.println("³ªÀÌ ÀÔ·Â°ª ¹üÀ§ ¿À·ù");
+		age = 0;
+	}
+   }
+
+   String toString(){
+		retrun "¼º¸í:" + name + " ³ªÀÌ:"+age;
+   }
+
+}
+
+class PersonTest{
+ public static void main(String[] args){
+	Person p1,p2,p3;
+	p1 = new Person();
+	p2 = new Person("È«±æµ¿", 20);
+	p3 = new Person("È²ÁøÀÌ", 22);
+
+	Person plist[];
+	plist = new Person[3];
+
+	plist[0] = p1;
+	plist[1] = p2;
+	plist[2] = p3;
+
+
+	for (int i=0; i < plist.length; i++){
+		System.out.println(plist[i]);
+    	}
+
+	Person plist2[]={new Person("ÀÌ¸ù·æ", 18), new Person("¼ºÃáÇâ", 16)};
+
+	for (Person p: plist2)
+		System.out.println(p);
+    	}
+
+}
+

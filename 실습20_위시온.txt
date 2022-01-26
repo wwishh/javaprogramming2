@@ -1,0 +1,67 @@
+package pk0605;
+
+import javax.swing.*;
+
+import java.awt.*;
+import java.awt.event.*;
+
+class MyFrame1 extends JFrame implements MouseListener, MouseMotionListener {
+	private JLabel la = new JLabel();
+	private JPanel panel;
+
+ public MyFrame1() {
+ setTitle("Mouse Event");
+ setSize(300, 200);
+ setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+
+ panel = new JPanel();
+ panel.addMouseListener(this); //마우스 이벤트 처리기 등록 
+panel.addMouseMotionListener(this); //마우스 모션 이벤트 처리기 등록
+add(panel);
+ panel.add(la);
+ setVisible(true);
+
+
+ }
+ public void mousePressed(MouseEvent e) {
+ display("Mouse pressed (# of clicks: " + e.getClickCount() + ")", e);
+ }
+
+ public void mouseReleased(MouseEvent e) {
+ display("Mouse released (# of clicks: " + e.getClickCount() + ")", e);
+ }
+
+ public void mouseEntered(MouseEvent e) {
+ panel.setBackground(Color.BLUE);
+ display("Mouse entered", e);
+ }
+
+ public void mouseExited(MouseEvent e) {
+ panel.setBackground(Color.WHITE);
+ display("Mouse exited", e);
+ }
+
+ public void mouseClicked(MouseEvent e) {
+ display("Mouse clicked (# of clicks: " + e.getClickCount() + ")", e);
+ }
+ public void display(String s, MouseEvent e) {
+ la.setText(s + " X=" + e.getX() + " Y=" + e.getY());
+ }
+
+ public void mouseDragged(MouseEvent e) {
+ display("Mouse dragged", e);
+ panel.setBackground(Color.YELLOW);
+ }
+
+ public void mouseMoved(MouseEvent e) {
+ display("Mouse moved", e);
+
+ }
+}
+
+public class MyFrameTest5 {
+ public static void main(String[] args) {
+ MyFrame1 f=new MyFrame1();
+ }
+} 

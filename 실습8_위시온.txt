@@ -1,0 +1,127 @@
+package pk0405;
+
+//실습 #8. 프로그램 실행결과를 확인하고, 멤버변수, 매개변수, 생성자, 메소드 재정의, 상속, 인터페이스구현에 대한 부분을 찾아서 주석처리
+
+interface soundable {//추상클래스 정의
+	void sound();//추상메소드 정의
+}
+
+class Animal {클래스 Animal 정의
+	private String type;//접근 제한 문자열 type선언
+
+	public Animal(String aType) {//생성자 정의
+		type = new String(aType);//매개변수를 사용
+	}
+
+	public String toString() {//출력 메소드 정의
+		return "This is a " + type;
+	}
+}
+
+class Cat extends Animal implements soundable {//Animal을 상속받고 soundable을 구현
+	private String name; // Name of a cat
+	private String breed; // Cat breed
+
+	public Cat(String aName) {// 생성자 정의
+		super("Cat");//Animal 생성자 호출
+		name = aName;//멤버변수 초기화
+		breed = "Unknown";//멤버변수 초기화
+	}
+
+	public Cat(String aName, String aBreed) {//생성자 정의
+		super("Cat");//Animal 생성자 호출
+		name = aName;//멤버변수 초기화
+		breed = aBreed;//멤버변수 초기화
+	}
+
+	public String toString() {//출력 메소드 정의
+		return super.toString() + "\nIt's " + name + " the " + breed;
+	}
+
+	public void sound() {//메소드 재정의
+		System.out.println("야옹");
+	}
+
+	public void reaction(Object obj) {//타입 상관없는 Object
+		if (obj instanceof Cat) {//Cat에 상속되있으면
+			System.out.print("꼬리내리고 ");
+			sound();//인터페이스 메소드 호출
+		} else if (obj instanceof Dog) {//DOG에 상속되있으면
+			System.out.print("꼬리올리고 ");
+			sound();//인터페이스 메소드 호출
+			sound();
+			sound();
+		} else {
+			System.out.print("꼬리 흔들 ");
+		}
+	}
+}
+
+class Dog extends Animal implements soundable {//Animal을 상속받고 soundable을 구현
+	private String name; // Name of a Dog
+	private String breed; // Dog breed
+
+	public Dog(String aName) {//생성자 정의
+		super("Dog");//Animal 생성자 호출
+		name = aName;//멤버변수 초기화
+		breed = "Unknown";//멤버변수 초기화
+	}
+
+	public Dog(String aName, String aBreed) {//생성자 정의
+		super("Dog");//Animal 생성자 호출
+		name = aName;//멤버변수 초기화
+		breed = aBreed;//멤버변수 초기화
+	}
+
+	public String toString() {//출력 메소드 정의
+		return super.toString() + "\nIt's " + name + " the " + breed;
+	}
+
+	public void sound() {//메소드 재정의
+		System.out.println("멍 멍");
+	}
+
+	public void lash(String person) {lash 메소드 정의
+		if (person.equals("엄마")) {
+			System.out.println("꼬리치기 10회");
+		} else if (person.equals("아빠")) {
+			System.out.println("꼬리치기 5회");
+		} else if (person.equals("형")) {
+			System.out.println("꼬리치기 1회");
+		} else if (person.equals("나")) {
+			System.out.println("꼬리치기 100회");
+		}
+	}
+}
+
+public class AnimalTest {
+	public static void main(String[] args) {
+		Animal[] theAnimals = { //Animal형의 배열선언
+new Dog("Rover", "Poodle"),//Dog클래스형 downcast
+				new Cat("Max", "Abyssinian"),
+//Cat 클래스형 downcast 
+new Dog("Baboy", "mix") };//Dog 클래스형 downcast
+
+		for (int i = 0; i < theAnimals.length; i++) {//배열 길이만큼 반복
+			System.out.println(theAnimals[i]);객체 출력
+
+			if (theAnimals[i] instanceof soundable) {//객체가 soundable 인터페이스 타입일 떄 실행
+				soundable pet = (soundable) theAnimals[i];//soundable로 형변환
+				pet.sound();
+			}
+
+			if (theAnimals[i] instanceof Cat) {//객체가 Cat 타입일 때 실행
+				Cat pet = (Cat) theAnimals[i];//Cat으로 형변환
+				pet.reaction(new Dog("happy"));//Cat 클래스의 reaction 메소드 호출
+				pet.reaction(new Cat("nabi"));
+			}
+
+			if (theAnimals[i] instanceof Dog) {//객체가 Dog 타입일때 실행
+				Dog pet = (Dog) theAnimals[i];//Dog으로 형변환
+				pet.lash("엄마");//Dog클래스의 lash함수 호출
+				pet.lash("나");
+				pet.lash("형");
+			}
+		}// for
+	}
+}

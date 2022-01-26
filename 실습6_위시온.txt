@@ -1,0 +1,79 @@
+(1)Abstract class:추상 메서드를 포함하고 상속을 목적으로 구성되며 클래스 계층구조의 상위를 나타내는 일반적인 특성을 가진 클래스
+
+(2)Abstract method:기능이 무엇(What)인지만을 선언하고 구현부분이 없는 메서드
+
+(3)Interface:서로 다른 클래스 사이의 공유기능을 제공하기 위한 구조
+
+(4)Instancd of:객체의 타입을 확인하는 관계 연산자
+
+abstract class Point {
+ protected int x, y; //상속을 사용하기위함
+ public Point(int x, int y)
+ {
+  this.x = x; this.y = y;//매개변수 초기화
+ }
+ public abstract void display();//구현부분이 없음
+ public void move(int x, int y)
+ {
+  this.x += x;
+  this.y += y;//매개변수 초기화
+ }
+}
+class Point3D extends Point {
+ int z; 
+ public Point3D(int x, int y, int z)
+ {
+  super(x,y);//상위클래스의 생성자 호출
+  this.z = z;
+ }
+ public void display()
+ {
+  System.out.println("x:"+x+ " y:" + y + " z:"+ z);
+ }
+ public void move(int x, int y, int z)
+ {
+  super.move(x,y); //상위클래스의 생성자 호출
+  this.z += z;
+ }
+}
+interface Colorable //클래스 간의 공유기능 제공
+{
+ void setColor(int color);
+}
+class ColoredPoint extends Point implements Colorable 
+{
+    int color;
+ public ColoredPoint(int x, int y){super(x,y);}//상위클래스의 생성자 호출
+ public ColoredPoint(int x, int y, int color)
+ {
+  this(x, y);
+  this.color = color;
+ }
+ public void setColor(int color) { this.color = color; }//인터페이스의 메서드 재정의
+ public void display()//추상클래스의 메서드 재정의
+ {
+  System.out.println("x:"+x+ " y:" + y + " color:"+ color);
+ }
+}
+class InterfaceEx4
+{
+ public static void main(String args[]) {
+  Point[] plist = {new Point3D(10, 10, 10), 
+    new ColoredPoint(50, 50)};
+  for(int i=0; i < plist.length; i++)
+  {
+   
+   if (plist[i] instanceof Colorable ){//Colorable 인터페이스를 구현한 객체인가 확인
+    Colorable ca = (Colorable) plist[i];//Colorable 인터페이스로 형 변환
+    ca.setColor(200); //Colorable 인터페이스의 메서드 호출
+   }
+   if (plist[i]instanceof  Point3D){
+    
+    ((Point3D)plist[i]).move(10, 20, 30);//Point3D로 형 변환하여 호출
+   }
+   else
+    plist[i].move(20, 40);//Point의 move메서드 호출
+   plist[i].display();      
+  }
+ }
+}

@@ -1,0 +1,50 @@
+package pk0503;
+
+import java.util.*;
+
+public class HashMapStudent {
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		String id;
+		int password = 0;
+
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+
+		System.out.println("<*사용자 등록*>");
+
+		while (true) {
+			System.out.print("ID(종료:q):");
+			id = sc.next();
+			if (id.equals("q"))
+				break;
+
+			System.out.print("Password:");
+			password = sc.nextInt();
+			map.put(id, password);
+		}
+		System.out.println("-------------------");
+		System.out.println("<*등록자 명단*>");
+		System.out.println("ID:PASSWORD");
+
+		Set<String> keySet = map.keySet();
+		Iterator<String> keyIterator = keySet.iterator();
+		while (keyIterator.hasNext()) {
+			String key = keyIterator.next();
+			Integer value = map.get(key);
+			System.out.println(key + ":" + value);
+		}
+		System.out.println("--------------------");
+		System.out.println("<*등록자 검색*>");
+		while (true) {
+			System.out.print("찾을 ID(종료 q):");
+			String search = sc.next();
+			if (search.equals("q"))
+				break;
+			if (map.containsKey(search)) {
+				System.out.println("Password:" + map.get(search));
+			} else
+				System.out.println(search + "정보가 없습니다.");
+
+		}
+	}
+}
